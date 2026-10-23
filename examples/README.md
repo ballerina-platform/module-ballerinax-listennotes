@@ -2,13 +2,18 @@
 
 The `ballerinax/listennotes` connector provides practical examples illustrating usage in various scenarios.
 
-[//]: # (TODO: Add examples)
-1. 
-2. 
+1. [Genre podcast report](./genre_podcast_report/genre_podcast_report.md) - Finds the best podcasts in a genre and lists the most recent episodes of each.
+2. [Podcast playlist builder](./podcast_playlist_builder/podcast_playlist_builder.md) - Searches for episodes on a topic, collects them in a new playlist and reads the playlist back.
 
 ## Prerequisites
 
-[//]: # (TODO: Add prerequisites)
+1. Get a Listen API key from the [API dashboard](https://www.listennotes.com/api/dashboard/).
+
+2. For each example, create a `Config.toml` file with the related configuration. Here's an example of how your `Config.toml` file should look:
+
+    ```toml
+    apiKey = "<Listen API key>"
+    ```
 
 ## Running an example
 
