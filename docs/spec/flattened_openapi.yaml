@@ -50,10 +50,10 @@ paths:
         schema:
           type: integer
           example: 0
-          default: 0
           enum:
           - 0
           - 1
+          default: 0
       - name: type
         in: query
         description: "What type of contents do you want to search for? \n"
@@ -63,11 +63,11 @@ paths:
         schema:
           type: string
           example: episode
-          default: episode
           enum:
           - episode
           - podcast
           - curated
+          default: episode
       - name: offset
         in: query
         description: |
@@ -234,10 +234,10 @@ paths:
         schema:
           type: integer
           example: 0
-          default: 0
           enum:
           - 0
           - 1
+          default: 0
       - name: unique_podcasts
         in: query
         description: |
@@ -248,10 +248,10 @@ paths:
         schema:
           type: integer
           example: 0
-          default: 0
           enum:
           - 0
           - 1
+          default: 0
       - name: interviews_only
         in: query
         description: "Whether or not to keep only podcasts that have guest interviews\
@@ -263,10 +263,10 @@ paths:
         schema:
           type: integer
           example: 0
-          default: 0
           enum:
           - 0
           - 1
+          default: 0
       - name: sponsored_only
         in: query
         description: |
@@ -278,10 +278,10 @@ paths:
         schema:
           type: integer
           example: 0
-          default: 0
           enum:
           - 0
           - 1
+          default: 0
       - name: page_size
         in: query
         description: |
@@ -342,10 +342,10 @@ paths:
         schema:
           type: integer
           example: 1
-          default: 0
           enum:
           - 0
           - 1
+          default: 0
       - name: show_genres
         in: query
         description: |
@@ -356,10 +356,10 @@ paths:
         schema:
           type: integer
           example: 1
-          default: 0
           enum:
           - 0
           - 1
+          default: 0
       - name: safe_mode
         in: query
         description: |
@@ -370,10 +370,10 @@ paths:
         schema:
           type: integer
           example: 0
-          default: 0
           enum:
           - 0
           - 1
+          default: 0
       responses:
         "200":
           description: OK
@@ -445,12 +445,12 @@ paths:
         explode: true
         schema:
           type: string
-          default: listennotes_id
           enum:
           - listennotes_id
           - itunes_id
           - spotify_id
           - rss
+          default: listennotes_id
       responses:
         "200":
           description: OK
@@ -669,13 +669,13 @@ paths:
         explode: true
         schema:
           type: string
-          default: recent_added_first
           enum:
           - recent_added_first
           - oldest_added_first
           - recent_published_first
           - oldest_published_first
           - listen_score
+          default: recent_added_first
         example: listen_score
       - $ref: "#/components/parameters/safeModeParam"
       responses:
@@ -750,10 +750,10 @@ paths:
         explode: true
         schema:
           type: string
-          default: recent_first
           enum:
           - recent_first
           - oldest_first
+          default: recent_first
         example: recent_first
       responses:
         "200":
@@ -907,6 +907,8 @@ paths:
         Batch fetch basic meta data for up to 10 episodes. This endpoint could be used to implement custom playlists for individual episodes. For detailed meta data of an individual episode, you need to use `GET /episodes/{id}`. This endpoint is available only in the PRO/ENTERPRISE plan.
       operationId: getEpisodesInBatch
       requestBody:
+        description: "Episode IDs to fetch in a batch, with optional ranking and show\
+          \ notes options"
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -946,6 +948,8 @@ paths:
         For detailed meta data (including episodes) of an individual podcast, you need to use `GET /podcasts/{id}`. This endpoint is available only in the PRO/ENTERPRISE plan.
       operationId: getPodcastsInBatch
       requestBody:
+        description: "Podcast IDs or RSS feeds to fetch in a batch, with optional\
+          \ episode options"
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -1045,10 +1049,10 @@ paths:
         schema:
           type: integer
           example: 1
-          default: 0
           enum:
           - 0
           - 1
+          default: 0
       responses:
         "200":
           description: OK
@@ -1303,6 +1307,7 @@ paths:
         Podcast hosting services can use this endpoint to help your users directly submit a new podcast to Listen Notes database. If the podcast doesn't exist in the database, "status" in the response will be "in review", and we'll review it within 12 hours. If the podcast exists, "status" in the response will be "found". If this submission is rejected, "status" in the response will be "rejected". You can use `POST /podcasts` to check if multiple podcasts exist in the database. If you want to get a notification once the podcast is accepted, you can either specify the "email" parameter or configure a webhook url in the dashboard: listennotes.com/api/dashboard/#webhooks
       operationId: submitPodcast
       requestBody:
+        description: RSS feed URL and optional email of the podcast to submit
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -1451,12 +1456,12 @@ paths:
         schema:
           type: string
           example: recent_added_first
-          default: recent_added_first
           enum:
           - recent_added_first
           - oldest_added_first
           - recent_published_first
           - oldest_published_first
+          default: recent_added_first
       responses:
         "200":
           description: OK
@@ -1509,6 +1514,7 @@ paths:
           type: string
           example: m1pe7z60bsw
       requestBody:
+        description: "Updated playlist title, description, visibility and notes settings"
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -1648,12 +1654,12 @@ paths:
         schema:
           type: string
           example: recent_added_first
-          default: recent_added_first
           enum:
           - recent_added_first
           - oldest_added_first
           - name_a_to_z
           - name_z_to_a
+          default: recent_added_first
       - name: page
         in: query
         description: |
@@ -1703,6 +1709,7 @@ paths:
         Only playlists owned by your admin API account can be modified; contributor membership does not grant write access.
       operationId: createPlaylist
       requestBody:
+        description: "Playlist details: title, type, visibility and description"
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -1791,6 +1798,7 @@ paths:
           type: string
           example: m1pe7z60bsw
       requestBody:
+        description: "Episode or podcast to add to the playlist, with optional notes"
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -1911,6 +1919,7 @@ paths:
           type: integer
           example: 23
       requestBody:
+        description: Updated notes for the playlist item
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -2350,25 +2359,44 @@ components:
         id:
           $ref: "#/components/schemas/PodcastIdField"
         genre_ids:
-          $ref: "#/components/schemas/GenreIdsField"
+          description: Ids of the genres this podcast belongs to
+          allOf:
+          - $ref: "#/components/schemas/GenreIdsField"
         listennotes_url:
-          $ref: "#/components/schemas/PodcastLNUrlField"
+          description: The url of this podcast on ListenNotes.com
+          allOf:
+          - $ref: "#/components/schemas/PodcastLNUrlField"
         title_highlighted:
-          $ref: "#/components/schemas/PodcastTitleHighlightedField"
+          description: Highlighted segment of podcast name
+          allOf:
+          - $ref: "#/components/schemas/PodcastTitleHighlightedField"
         title_original:
-          $ref: "#/components/schemas/PodcastTitleOriginalField"
+          description: Plain text of podcast name
+          allOf:
+          - $ref: "#/components/schemas/PodcastTitleOriginalField"
         publisher_highlighted:
-          $ref: "#/components/schemas/PublisherHighlightedField"
+          description: Highlighted segment of this podcast's publisher name
+          allOf:
+          - $ref: "#/components/schemas/PublisherHighlightedField"
         publisher_original:
-          $ref: "#/components/schemas/PublisherOriginalField"
+          description: Plain text of this podcast's publisher name
+          allOf:
+          - $ref: "#/components/schemas/PublisherOriginalField"
         image:
           $ref: "#/components/schemas/ImageField"
         thumbnail:
           $ref: "#/components/schemas/ThumbnailField"
         listen_score:
-          $ref: "#/components/schemas/ListenScoreField"
+          description: "The estimated popularity score of this podcast compared to\
+            \ all other rss-based public podcasts in the world, on a scale from 0\
+            \ to 100"
+          allOf:
+          - $ref: "#/components/schemas/ListenScoreField"
         listen_score_global_rank:
-          $ref: "#/components/schemas/ListenScoreGlobalRankField"
+          description: "The estimated popularity ranking of this podcast compared\
+            \ to all other rss-based public podcasts in the world, such as 0.5%"
+          allOf:
+          - $ref: "#/components/schemas/ListenScoreGlobalRankField"
       description: The podcast that this episode belongs to.
     DeletedItem:
       type: object
@@ -2498,10 +2526,10 @@ components:
           description: |
             Whether or not to fetch up to 15 latest episodes from these podcasts, sorted by pub_date. 1 is yes, and 0 is no.
           example: 1
-          default: 0
           enum:
           - 0
           - 1
+          default: 0
         next_episode_pub_date:
           type: integer
           description: |
@@ -2744,51 +2772,92 @@ components:
           example: |
             The Star Wars 7x7 Podcast is Rebel-rousing fun for everyday Jedi, between 7 and 14 minutes a day, 7 days a week. Join host Allen Voivod for Star Wars news, history, interviews, trivia, and deep dives into the Star Wars story as told in movies, books, comics, games, cartoons, and more. Subscribe now for your daily dose of Star Wars joy. It's destiny unleashed! #SW7x7
         title_highlighted:
-          $ref: "#/components/schemas/PodcastTitleHighlightedField"
+          description: Highlighted segment of podcast name
+          allOf:
+          - $ref: "#/components/schemas/PodcastTitleHighlightedField"
         title_original:
-          $ref: "#/components/schemas/PodcastTitleOriginalField"
+          description: Plain text of podcast name
+          allOf:
+          - $ref: "#/components/schemas/PodcastTitleOriginalField"
         publisher_highlighted:
-          $ref: "#/components/schemas/PublisherHighlightedField"
+          description: Highlighted segment of this podcast's publisher name
+          allOf:
+          - $ref: "#/components/schemas/PublisherHighlightedField"
         publisher_original:
-          $ref: "#/components/schemas/PublisherOriginalField"
+          description: Plain text of this podcast's publisher name
+          allOf:
+          - $ref: "#/components/schemas/PublisherOriginalField"
         image:
           $ref: "#/components/schemas/ImageField"
         thumbnail:
           $ref: "#/components/schemas/ThumbnailField"
         itunes_id:
-          $ref: "#/components/schemas/iTunesIdField"
+          description: iTunes id for this podcast
+          allOf:
+          - $ref: "#/components/schemas/iTunesIdField"
         latest_episode_id:
-          $ref: "#/components/schemas/LatestEpisodeIdField"
+          description: The id of the most recently published episode of this podcast
+          allOf:
+          - $ref: "#/components/schemas/LatestEpisodeIdField"
         latest_pub_date_ms:
-          $ref: "#/components/schemas/LatestPubDateMsField"
+          description: "The published date of the latest episode of this podcast,\
+            \ as an Epoch Unix timestamp in milliseconds"
+          allOf:
+          - $ref: "#/components/schemas/LatestPubDateMsField"
         earliest_pub_date_ms:
-          $ref: "#/components/schemas/EarliestPubDateMsField"
+          description: "The published date of the oldest episode of this podcast,\
+            \ as an Epoch Unix timestamp in milliseconds"
+          allOf:
+          - $ref: "#/components/schemas/EarliestPubDateMsField"
         id:
           $ref: "#/components/schemas/PodcastIdField"
         genre_ids:
-          $ref: "#/components/schemas/GenreIdsField"
+          description: Ids of the genres this podcast belongs to
+          allOf:
+          - $ref: "#/components/schemas/GenreIdsField"
         listennotes_url:
-          $ref: "#/components/schemas/PodcastLNUrlField"
+          description: The url of this podcast on ListenNotes.com
+          allOf:
+          - $ref: "#/components/schemas/PodcastLNUrlField"
         total_episodes:
-          $ref: "#/components/schemas/TotalEpisodesField"
+          description: Total number of episodes in this podcast
+          allOf:
+          - $ref: "#/components/schemas/TotalEpisodesField"
         audio_length_sec:
-          $ref: "#/components/schemas/AvgAudioLengthSecField"
+          description: "Average audio length of all episodes of this podcast, in seconds"
+          allOf:
+          - $ref: "#/components/schemas/AvgAudioLengthSecField"
         update_frequency_hours:
-          $ref: "#/components/schemas/UpdateFrequencyHoursField"
+          description: "How frequently this podcast releases a new episode, in hours"
+          allOf:
+          - $ref: "#/components/schemas/UpdateFrequencyHoursField"
         email:
           $ref: "#/components/schemas/EmailField"
         explicit_content:
-          $ref: "#/components/schemas/ExplicitField"
+          description: Whether this podcast contains explicit language
+          allOf:
+          - $ref: "#/components/schemas/ExplicitField"
         website:
           $ref: "#/components/schemas/WebsiteField"
         listen_score:
-          $ref: "#/components/schemas/ListenScoreField"
+          description: "The estimated popularity score of this podcast compared to\
+            \ all other rss-based public podcasts in the world, on a scale from 0\
+            \ to 100"
+          allOf:
+          - $ref: "#/components/schemas/ListenScoreField"
         listen_score_global_rank:
-          $ref: "#/components/schemas/ListenScoreGlobalRankField"
+          description: "The estimated popularity ranking of this podcast compared\
+            \ to all other rss-based public podcasts in the world, such as 0.5%"
+          allOf:
+          - $ref: "#/components/schemas/ListenScoreGlobalRankField"
         has_guest_interviews:
-          $ref: "#/components/schemas/HasGuestInterviewsField"
+          description: Whether this podcast has guest interviews
+          allOf:
+          - $ref: "#/components/schemas/HasGuestInterviewsField"
         has_sponsors:
-          $ref: "#/components/schemas/HasSponsorsField"
+          description: Whether this podcast has sponsors
+          allOf:
+          - $ref: "#/components/schemas/HasSponsorsField"
       description: When **type** is *podcast*.
     TrendingSearchesResponse:
       required:
@@ -2845,10 +2914,10 @@ components:
           description: The saved default view. Changing it preserves all episodes
             and podcasts in the playlist.
           example: episode_list
-          default: episode_list
           enum:
           - episode_list
           - podcast_list
+          default: episode_list
       additionalProperties: false
     CuratedListFull:
       type: object
@@ -2917,11 +2986,16 @@ components:
         thumbnail:
           $ref: "#/components/schemas/PlaylistThumbnailField"
         listennotes_url:
-          $ref: "#/components/schemas/PlaylistListennotesUrlField"
+          description: The url of this playlist on ListenNotes.com
+          allOf:
+          - $ref: "#/components/schemas/PlaylistListennotesUrlField"
         visibility:
           $ref: "#/components/schemas/PlaylistVisibilityField"
         last_timestamp_ms:
-          $ref: "#/components/schemas/PlaylistLastTimestampMsField"
+          description: "Pass to the `last_timestamp_ms` parameter of `GET /playlists/{id}`\
+            \ to paginate through the items of this playlist"
+          allOf:
+          - $ref: "#/components/schemas/PlaylistLastTimestampMsField"
       description: A playlist
     TypeaheadResponse:
       required:
@@ -3291,6 +3365,8 @@ components:
             in milliseconds.
           example: 1595567004958
         data:
+          description: "The episode, podcast or custom audio that this item holds,\
+            \ or a placeholder when it has been deleted"
           oneOf:
           - $ref: "#/components/schemas/PlaylistEpisodeData"
           - $ref: "#/components/schemas/PlaylistPodcastData"
@@ -3475,7 +3551,10 @@ components:
         id:
           $ref: "#/components/schemas/CuratedIdField"
         pub_date_ms:
-          $ref: "#/components/schemas/CuratedPubDateMsField"
+          description: "Published date of this curated list, as an Epoch Unix timestamp\
+            \ in milliseconds"
+          allOf:
+          - $ref: "#/components/schemas/CuratedPubDateMsField"
         description_highlighted:
           type: string
           description: Highlighted segment of this curated list's description
@@ -3495,11 +3574,17 @@ components:
           description: Plain text of this curated list's title
           example: What are some good Star Wars Podcast to listen to?
         listennotes_url:
-          $ref: "#/components/schemas/CuratedLNUrlField"
+          description: The url of this curated list on ListenNotes.com
+          allOf:
+          - $ref: "#/components/schemas/CuratedLNUrlField"
         source_url:
-          $ref: "#/components/schemas/CuratedSourceUrlField"
+          description: Url of the source of this curated list
+          allOf:
+          - $ref: "#/components/schemas/CuratedSourceUrlField"
         source_domain:
-          $ref: "#/components/schemas/CuratedSourceDomainField"
+          description: The domain name of the source of this curated list
+          allOf:
+          - $ref: "#/components/schemas/CuratedSourceDomainField"
         total:
           $ref: "#/components/schemas/CuratedTotalPodcastsField"
         podcasts:
@@ -3637,7 +3722,9 @@ components:
         audio:
           $ref: "#/components/schemas/AudioField"
         audio_length_sec:
-          $ref: "#/components/schemas/AudioLengthSecField"
+          description: "Audio length of this episode, in seconds"
+          allOf:
+          - $ref: "#/components/schemas/AudioLengthSecField"
         rss:
           $ref: "#/components/schemas/RssField"
         description_highlighted:
@@ -3672,15 +3759,24 @@ components:
         thumbnail:
           $ref: "#/components/schemas/EpisodeThumbnailField"
         itunes_id:
-          $ref: "#/components/schemas/iTunesIdField"
+          description: iTunes id for this podcast
+          allOf:
+          - $ref: "#/components/schemas/iTunesIdField"
         pub_date_ms:
-          $ref: "#/components/schemas/EpisodePubDateMsField"
+          description: "Published date for this episode, as an Epoch Unix timestamp\
+            \ in milliseconds"
+          allOf:
+          - $ref: "#/components/schemas/EpisodePubDateMsField"
         id:
           $ref: "#/components/schemas/EpisodeIdField"
         listennotes_url:
-          $ref: "#/components/schemas/EpisodeLNUrlField"
+          description: The url of this episode on ListenNotes.com
+          allOf:
+          - $ref: "#/components/schemas/EpisodeLNUrlField"
         explicit_content:
-          $ref: "#/components/schemas/ExplicitField"
+          description: Whether this podcast contains explicit language
+          allOf:
+          - $ref: "#/components/schemas/ExplicitField"
         link:
           $ref: "#/components/schemas/LinkField"
         podcast:
@@ -3801,7 +3897,9 @@ components:
         thumbnail:
           $ref: "#/components/schemas/PlaylistThumbnailField"
         listennotes_url:
-          $ref: "#/components/schemas/PlaylistListennotesUrlField"
+          description: The url of this playlist on ListenNotes.com
+          allOf:
+          - $ref: "#/components/schemas/PlaylistListennotesUrlField"
         visibility:
           $ref: "#/components/schemas/PlaylistVisibilityField"
       description: A playlist
@@ -3831,7 +3929,9 @@ components:
         type: object
         properties:
           podcast:
-            $ref: "#/components/schemas/PodcastMinimum"
+            description: The podcast that this episode belongs to
+            allOf:
+            - $ref: "#/components/schemas/PodcastMinimum"
     PodcastTypeaheadResult:
       type: object
       properties:
@@ -3968,10 +4068,10 @@ components:
       schema:
         type: integer
         example: 0
-        default: 0
         enum:
         - 0
         - 1
+        default: 0
     genreIdParam:
       name: genre_id
       in: query

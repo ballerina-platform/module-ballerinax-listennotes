@@ -1034,12 +1034,12 @@ paths:
         '
       operationId: getEpisodesInBatch
       requestBody:
+        description: Episode IDs to fetch in a batch, with optional ranking and show notes options
         content:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/GetEpisodesInBatchForm'
         required: true
-        description: Episode IDs to fetch in a batch, with optional ranking and show notes options
       responses:
         '200':
           description: OK
@@ -1079,12 +1079,12 @@ paths:
         '
       operationId: getPodcastsInBatch
       requestBody:
+        description: Podcast IDs or RSS feeds to fetch in a batch, with optional episode options
         content:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/GetPodcastsInBatchForm'
         required: false
-        description: Podcast IDs or RSS feeds to fetch in a batch, with optional episode options
       responses:
         '200':
           description: OK
@@ -1460,12 +1460,12 @@ paths:
         '
       operationId: submitPodcast
       requestBody:
+        description: RSS feed URL and optional email of the podcast to submit
         content:
           application/x-www-form-urlencoded:
             schema:
               $ref: '#/components/schemas/SubmitPodcastForm'
         required: true
-        description: RSS feed URL and optional email of the podcast to submit
       responses:
         '200':
           description: OK
@@ -1697,6 +1697,7 @@ paths:
           type: string
           example: m1pe7z60bsw
       requestBody:
+        description: Updated playlist title, description, visibility and notes settings
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -1705,7 +1706,6 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdatePlaylistRequest'
         required: true
-        description: Updated playlist title, description, visibility and notes settings
       responses:
         '200':
           description: OK
@@ -1904,6 +1904,7 @@ paths:
         grant write access.'
       operationId: createPlaylist
       requestBody:
+        description: 'Playlist details: title, type, visibility and description'
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -1912,7 +1913,6 @@ paths:
             schema:
               $ref: '#/components/schemas/CreatePlaylistRequest'
         required: true
-        description: 'Playlist details: title, type, visibility and description'
       responses:
         '201':
           description: Created
@@ -1987,6 +1987,7 @@ paths:
           type: string
           example: m1pe7z60bsw
       requestBody:
+        description: Episode or podcast to add to the playlist, with optional notes
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -1995,7 +1996,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AddPlaylistItemRequest'
         required: true
-        description: Episode or podcast to add to the playlist, with optional notes
       responses:
         '200':
           description: Already present
@@ -2107,6 +2107,7 @@ paths:
           type: integer
           example: 23
       requestBody:
+        description: Updated notes for the playlist item
         content:
           application/x-www-form-urlencoded:
             schema:
@@ -2115,7 +2116,6 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdatePlaylistItemNotesRequest'
         required: true
-        description: Updated notes for the playlist item
       responses:
         '200':
           description: OK
@@ -2579,10 +2579,12 @@ components:
       type: object
       properties:
         title_highlighted:
+          description: Highlighted segment of podcast name
           allOf:
           - $ref: '#/components/schemas/PodcastTitleHighlightedField'
           x-ballerina-name: titleHighlighted
         title_original:
+          description: Plain text of podcast name
           allOf:
           - $ref: '#/components/schemas/PodcastTitleOriginalField'
           x-ballerina-name: titleOriginal
@@ -2591,28 +2593,36 @@ components:
         thumbnail:
           $ref: '#/components/schemas/ThumbnailField'
         listen_score_global_rank:
+          description: The estimated popularity ranking of this podcast compared to all other rss-based
+            public podcasts in the world, such as 0.5%
           allOf:
           - $ref: '#/components/schemas/ListenScoreGlobalRankField'
           x-ballerina-name: listenScoreGlobalRank
         publisher_original:
+          description: Plain text of this podcast's publisher name
           allOf:
           - $ref: '#/components/schemas/PublisherOriginalField'
           x-ballerina-name: publisherOriginal
         publisher_highlighted:
+          description: Highlighted segment of this podcast's publisher name
           allOf:
           - $ref: '#/components/schemas/PublisherHighlightedField'
           x-ballerina-name: publisherHighlighted
         listen_score:
+          description: The estimated popularity score of this podcast compared to all other rss-based
+            public podcasts in the world, on a scale from 0 to 100
           allOf:
           - $ref: '#/components/schemas/ListenScoreField'
           x-ballerina-name: listenScore
         id:
           $ref: '#/components/schemas/PodcastIdField'
         genre_ids:
+          description: Ids of the genres this podcast belongs to
           allOf:
           - $ref: '#/components/schemas/GenreIdsField'
           x-ballerina-name: genreIds
         listennotes_url:
+          description: The url of this podcast on ListenNotes.com
           allOf:
           - $ref: '#/components/schemas/PodcastLNUrlField'
           x-ballerina-name: listennotesUrl
@@ -3023,6 +3033,7 @@ components:
       type: object
       properties:
         update_frequency_hours:
+          description: How frequently this podcast releases a new episode, in hours
           allOf:
           - $ref: '#/components/schemas/UpdateFrequencyHoursField'
           x-ballerina-name: updateFrequencyHours
@@ -3037,32 +3048,40 @@ components:
             '
           x-ballerina-name: descriptionOriginal
         listen_score_global_rank:
+          description: The estimated popularity ranking of this podcast compared to all other rss-based
+            public podcasts in the world, such as 0.5%
           allOf:
           - $ref: '#/components/schemas/ListenScoreGlobalRankField'
           x-ballerina-name: listenScoreGlobalRank
         itunes_id:
+          description: iTunes id for this podcast
           allOf:
           - $ref: '#/components/schemas/ITunesIdField'
           x-ballerina-name: itunesId
         explicit_content:
+          description: Whether this podcast contains explicit language
           allOf:
           - $ref: '#/components/schemas/ExplicitField'
           x-ballerina-name: explicitContent
         audio_length_sec:
+          description: Average audio length of all episodes of this podcast, in seconds
           allOf:
           - $ref: '#/components/schemas/AvgAudioLengthSecField'
           x-ballerina-name: audioLengthSec
         title_original:
+          description: Plain text of podcast name
           allOf:
           - $ref: '#/components/schemas/PodcastTitleOriginalField'
           x-ballerina-name: titleOriginal
         rss:
           $ref: '#/components/schemas/RssField'
         publisher_original:
+          description: Plain text of this podcast's publisher name
           allOf:
           - $ref: '#/components/schemas/PublisherOriginalField'
           x-ballerina-name: publisherOriginal
         has_sponsors:
+          description: Whether this podcast has sponsors
           allOf:
           - $ref: '#/components/schemas/HasSponsorsField'
           x-ballerina-name: hasSponsors
@@ -3077,30 +3096,38 @@ components:
         website:
           $ref: '#/components/schemas/WebsiteField'
         publisher_highlighted:
+          description: Highlighted segment of this podcast's publisher name
           allOf:
           - $ref: '#/components/schemas/PublisherHighlightedField'
           x-ballerina-name: publisherHighlighted
         earliest_pub_date_ms:
+          description: The published date of the oldest episode of this podcast, as an Epoch Unix timestamp
+            in milliseconds
           allOf:
           - $ref: '#/components/schemas/EarliestPubDateMsField'
           x-ballerina-name: earliestPubDateMs
         genre_ids:
+          description: Ids of the genres this podcast belongs to
           allOf:
           - $ref: '#/components/schemas/GenreIdsField'
           x-ballerina-name: genreIds
         listennotes_url:
+          description: The url of this podcast on ListenNotes.com
           allOf:
           - $ref: '#/components/schemas/PodcastLNUrlField'
           x-ballerina-name: listennotesUrl
         total_episodes:
+          description: Total number of episodes in this podcast
           allOf:
           - $ref: '#/components/schemas/TotalEpisodesField'
           x-ballerina-name: totalEpisodes
         title_highlighted:
+          description: Highlighted segment of podcast name
           allOf:
           - $ref: '#/components/schemas/PodcastTitleHighlightedField'
           x-ballerina-name: titleHighlighted
         has_guest_interviews:
+          description: Whether this podcast has guest interviews
           allOf:
           - $ref: '#/components/schemas/HasGuestInterviewsField'
           x-ballerina-name: hasGuestInterviews
@@ -3115,14 +3142,19 @@ components:
             '
           x-ballerina-name: descriptionHighlighted
         latest_episode_id:
+          description: The id of the most recently published episode of this podcast
           allOf:
           - $ref: '#/components/schemas/LatestEpisodeIdField'
           x-ballerina-name: latestEpisodeId
         listen_score:
+          description: The estimated popularity score of this podcast compared to all other rss-based
+            public podcasts in the world, on a scale from 0 to 100
           allOf:
           - $ref: '#/components/schemas/ListenScoreField'
           x-ballerina-name: listenScore
         latest_pub_date_ms:
+          description: The published date of the latest episode of this podcast, as an Epoch Unix timestamp
+            in milliseconds
           allOf:
           - $ref: '#/components/schemas/LatestPubDateMsField'
           x-ballerina-name: latestPubDateMs
@@ -3266,12 +3298,15 @@ components:
         id:
           $ref: '#/components/schemas/PlaylistIdField'
         last_timestamp_ms:
+          description: Pass to the `last_timestamp_ms` parameter of `GET /playlists/{id}` to paginate
+            through the items of this playlist
           allOf:
           - $ref: '#/components/schemas/PlaylistLastTimestampMsField'
           x-ballerina-name: lastTimestampMs
         type:
           $ref: '#/components/schemas/PlaylistDefaultTypeField'
         listennotes_url:
+          description: The url of this playlist on ListenNotes.com
           allOf:
           - $ref: '#/components/schemas/PlaylistListennotesUrlField'
           x-ballerina-name: listennotesUrl
@@ -3661,6 +3696,8 @@ components:
           description: Notes for this item
           example: This is a good episode.
         data:
+          description: The episode, podcast or custom audio that this item holds, or a placeholder when
+            it has been deleted
           oneOf:
           - $ref: '#/components/schemas/PlaylistEpisodeData'
           - $ref: '#/components/schemas/PlaylistPodcastData'
@@ -3952,20 +3989,24 @@ components:
             fans in Reddit shared their favorite podcasts.'
           x-ballerina-name: descriptionHighlighted
         source_domain:
+          description: The domain name of the source of this curated list
           allOf:
           - $ref: '#/components/schemas/CuratedSourceDomainField'
           x-ballerina-name: sourceDomain
         id:
           $ref: '#/components/schemas/CuratedIdField'
         pub_date_ms:
+          description: Published date of this curated list, as an Epoch Unix timestamp in milliseconds
           allOf:
           - $ref: '#/components/schemas/CuratedPubDateMsField'
           x-ballerina-name: pubDateMs
         listennotes_url:
+          description: The url of this curated list on ListenNotes.com
           allOf:
           - $ref: '#/components/schemas/CuratedLNUrlField'
           x-ballerina-name: listennotesUrl
         source_url:
+          description: Url of the source of this curated list
           allOf:
           - $ref: '#/components/schemas/CuratedSourceUrlField'
           x-ballerina-name: sourceUrl
@@ -4112,20 +4153,24 @@ components:
             '
           x-ballerina-name: descriptionOriginal
         itunes_id:
+          description: iTunes id for this podcast
           allOf:
           - $ref: '#/components/schemas/ITunesIdField'
           x-ballerina-name: itunesId
         explicit_content:
+          description: Whether this podcast contains explicit language
           allOf:
           - $ref: '#/components/schemas/ExplicitField'
           x-ballerina-name: explicitContent
         audio_length_sec:
+          description: Audio length of this episode, in seconds
           allOf:
           - $ref: '#/components/schemas/AudioLengthSecField'
           x-ballerina-name: audioLengthSec
         link:
           $ref: '#/components/schemas/LinkField'
         listennotes_url:
+          description: The url of this episode on ListenNotes.com
           allOf:
           - $ref: '#/components/schemas/EpisodeLNUrlField'
           x-ballerina-name: listennotesUrl
@@ -4159,6 +4204,7 @@ components:
         id:
           $ref: '#/components/schemas/EpisodeIdField'
         pub_date_ms:
+          description: Published date for this episode, as an Epoch Unix timestamp in milliseconds
           allOf:
           - $ref: '#/components/schemas/EpisodePubDateMsField'
           x-ballerina-name: pubDateMs
@@ -4297,6 +4343,7 @@ components:
         type:
           $ref: '#/components/schemas/PlaylistDefaultTypeField'
         listennotes_url:
+          description: The url of this playlist on ListenNotes.com
           allOf:
           - $ref: '#/components/schemas/PlaylistListennotesUrlField'
           x-ballerina-name: listennotesUrl
@@ -4327,7 +4374,9 @@ components:
         type: object
         properties:
           podcast:
-            $ref: '#/components/schemas/PodcastMinimum'
+            description: The podcast that this episode belongs to
+            allOf:
+            - $ref: '#/components/schemas/PodcastMinimum'
     PodcastTypeaheadResult:
       type: object
       properties:

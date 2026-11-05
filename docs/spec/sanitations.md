@@ -1,6 +1,6 @@
 _Author_:  @DimuthuMadushan \
 _Created_: 2026/10/22 \
-_Updated_: 2026/10/22 \
+_Updated_: 2026/11/05 \
 _Edition_: Swan Lake
 
 # Sanitation for OpenAPI specification
@@ -15,9 +15,22 @@ These changes are done in order to improve the overall usability, and as workaro
 
 3. Renamed the generic schemas that flatten produced, kept stable through `ai-mappings.json`: `InlineResponse200` to `SearchEpisodeTitlesResponse`, `InlineResponse2001` to `DeletePlaylistResponse`, `InlineResponse2002` to `DeletePlaylistItemResponse`, `InlineResponse400` to `ErrorResponse`, `IdItemsBody` to `AddPlaylistItemRequest`, `ItemsitemIdBody` to `UpdatePlaylistItemNotesRequest`, `PlaylistsBody` to `CreatePlaylistRequest` and `PlaylistsidBody` to `UpdatePlaylistRequest`.
 
-4. Patched the generated `ballerina/utils.bal` after generation (a spec change can't do this one, and it must be re-applied after every regeneration): each trailing-separator `pop()` in `createFormURLEncodedRequestBody`, `getDeepObjectStyleRequest`, `getFormStyleRequest` (both branches) and `getSerializedRecordArray` now runs only when the array is non-empty. Without the guard, a form-encoded payload with no fields set, such as `addPlaylistItem(id, {})`, `updatePlaylist(id, {})` or `getPodcastsInBatch({})`, panics instead of sending the request. Output for non-empty payloads is unchanged.
+4. Patched the generated `ballerina/utils.bal` after generation (a spec change can't do this one, and it must be re-applied after every regeneration): each trailing-separator `pop()` in `createFormURLEncodedRequestBody`, `getDeepObjectStyleRequest`, `getFormStyleRequest` (both branches) and `getSerializedRecordArray` now runs only when the array is non-empty:
+
+   ```ballerina
+   if recordArray.length() > 0 {
+       _ = recordArray.pop();
+   }
+   ```
+
+   (`payload` in `createFormURLEncodedRequestBody`, `serializedArray` in `getSerializedRecordArray`). Without the guard, a form-encoded payload with no fields set, such as `addPlaylistItem(id, {})`, `updatePlaylist(id, {})` or `getPodcastsInBatch({})`, panics instead of sending the request. Output for non-empty payloads is unchanged.
 
 5. Made the `data` property of `PlaylistItem` distinguishable, in the original spec. Its four union members are open records whose fields are all optional, so a response always bound to the first one. Each member is now a named schema (`PlaylistEpisodeData`, `PlaylistPodcastData`, `PlaylistCustomAudioData`, `PlaylistDeletedItemData`) that extends the shared schema and requires one field: `podcast`, `publisher`, `audio` and `status` respectively. The shared `EpisodeSimple`, `PodcastSimple`, `CustomAudio` and `DeletedItem` schemas are unchanged, because other operations return them without those fields.
+
+6. Added descriptions to 39 properties that reference `*Field` schemas, wrapping each as `allOf: [{$ref}]` + `description` in `docs/spec/openapi.yaml`, a description to `PlaylistItem.data`, and descriptions to 7 inline request bodies.
+   - **Original**: the properties were bare `$ref`s to `*Field` schemas, `PlaylistItem.data` had no description, and 7 inline request bodies had no description.
+   - **Updated**: each property is `allOf: [{$ref}]` with a `description`, `PlaylistItem.data` has a description, and the 7 request bodies have descriptions.
+   - **Reason**: the generated record fields were undocumented, giving `undocumented field` build warnings, and the request bodies' `payload` parameters were undocumented in the client.
 
 ## OpenAPI cli command
 
@@ -26,4 +39,5 @@ The following command was used to generate the Ballerina client from the OpenAPI
 ```bash
 bal openapi -i docs/spec/aligned_ballerina_openapi.json -o ballerina --mode client --client-methods remote --license docs/license.txt
 ```
+
 Note: The license year is hardcoded to 2024, change if necessary.

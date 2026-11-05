@@ -1183,6 +1183,7 @@
                 "description": "Batch fetch basic meta data for up to 10 episodes. This endpoint could be used to implement custom playlists for individual episodes. For detailed meta data of an individual episode, you need to use `GET /episodes/{id}`. This endpoint is available only in the PRO/ENTERPRISE plan.\n",
                 "operationId": "getEpisodesInBatch",
                 "requestBody": {
+                    "description": "Episode IDs to fetch in a batch, with optional ranking and show notes options",
                     "content": {
                         "application/x-www-form-urlencoded": {
                             "schema": {
@@ -1190,8 +1191,7 @@
                             }
                         }
                     },
-                    "required": true,
-                    "description": "Episode IDs to fetch in a batch, with optional ranking and show notes options"
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -1239,6 +1239,7 @@
                 "description": "Batch fetch basic meta data for up to 10 podcasts.\nThis endpoint could be used to build something like OPML import,\nallowing users to import a bunch of podcasts via rss urls.\nFor detailed meta data (including episodes) of an individual podcast, you need to use `GET /podcasts/{id}`. This endpoint is available only in the PRO/ENTERPRISE plan.\n",
                 "operationId": "getPodcastsInBatch",
                 "requestBody": {
+                    "description": "Podcast IDs or RSS feeds to fetch in a batch, with optional episode options",
                     "content": {
                         "application/x-www-form-urlencoded": {
                             "schema": {
@@ -1246,8 +1247,7 @@
                             }
                         }
                     },
-                    "required": false,
-                    "description": "Podcast IDs or RSS feeds to fetch in a batch, with optional episode options"
+                    "required": false
                 },
                 "responses": {
                     "200": {
@@ -1765,6 +1765,7 @@
                 "description": "Podcast hosting services can use this endpoint to help your users directly submit a new podcast to Listen Notes database. If the podcast doesn't exist in the database, \"status\" in the response will be \"in review\", and we'll review it within 12 hours. If the podcast exists, \"status\" in the response will be \"found\". If this submission is rejected, \"status\" in the response will be \"rejected\". You can use `POST /podcasts` to check if multiple podcasts exist in the database. If you want to get a notification once the podcast is accepted, you can either specify the \"email\" parameter or configure a webhook url in the dashboard: listennotes.com/api/dashboard/#webhooks\n",
                 "operationId": "submitPodcast",
                 "requestBody": {
+                    "description": "RSS feed URL and optional email of the podcast to submit",
                     "content": {
                         "application/x-www-form-urlencoded": {
                             "schema": {
@@ -1772,8 +1773,7 @@
                             }
                         }
                     },
-                    "required": true,
-                    "description": "RSS feed URL and optional email of the podcast to submit"
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -2028,6 +2028,7 @@
                     }
                 ],
                 "requestBody": {
+                    "description": "Updated playlist title, description, visibility and notes settings",
                     "content": {
                         "application/x-www-form-urlencoded": {
                             "schema": {
@@ -2040,8 +2041,7 @@
                             }
                         }
                     },
-                    "required": true,
-                    "description": "Updated playlist title, description, visibility and notes settings"
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -2285,6 +2285,7 @@
                 "description": "Create an empty playlist owned by the API admin. Name is required; description defaults to an empty string, visibility defaults to public, and type defaults to episode_list. Set type to podcast_list to make podcasts the default view. The response includes the saved type and its listennotes_url.\n\nOnly playlists owned by your admin API account can be modified; contributor membership does not grant write access.",
                 "operationId": "createPlaylist",
                 "requestBody": {
+                    "description": "Playlist details: title, type, visibility and description",
                     "content": {
                         "application/x-www-form-urlencoded": {
                             "schema": {
@@ -2297,8 +2298,7 @@
                             }
                         }
                     },
-                    "required": true,
-                    "description": "Playlist details: title, type, visibility and description"
+                    "required": true
                 },
                 "responses": {
                     "201": {
@@ -2397,6 +2397,7 @@
                     }
                 ],
                 "requestBody": {
+                    "description": "Episode or podcast to add to the playlist, with optional notes",
                     "content": {
                         "application/x-www-form-urlencoded": {
                             "schema": {
@@ -2409,8 +2410,7 @@
                             }
                         }
                     },
-                    "required": true,
-                    "description": "Episode or podcast to add to the playlist, with optional notes"
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -2559,6 +2559,7 @@
                     }
                 ],
                 "requestBody": {
+                    "description": "Updated notes for the playlist item",
                     "content": {
                         "application/x-www-form-urlencoded": {
                             "schema": {
@@ -2571,8 +2572,7 @@
                             }
                         }
                     },
-                    "required": true,
-                    "description": "Updated notes for the playlist item"
+                    "required": true
                 },
                 "responses": {
                     "200": {
@@ -3229,6 +3229,7 @@
                 "type": "object",
                 "properties": {
                     "title_highlighted": {
+                        "description": "Highlighted segment of podcast name",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PodcastTitleHighlightedField"
@@ -3237,6 +3238,7 @@
                         "x-ballerina-name": "titleHighlighted"
                     },
                     "title_original": {
+                        "description": "Plain text of podcast name",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PodcastTitleOriginalField"
@@ -3251,6 +3253,7 @@
                         "$ref": "#/components/schemas/ThumbnailField"
                     },
                     "listen_score_global_rank": {
+                        "description": "The estimated popularity ranking of this podcast compared to all other rss-based public podcasts in the world, such as 0.5%",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/ListenScoreGlobalRankField"
@@ -3259,6 +3262,7 @@
                         "x-ballerina-name": "listenScoreGlobalRank"
                     },
                     "publisher_original": {
+                        "description": "Plain text of this podcast's publisher name",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PublisherOriginalField"
@@ -3267,6 +3271,7 @@
                         "x-ballerina-name": "publisherOriginal"
                     },
                     "publisher_highlighted": {
+                        "description": "Highlighted segment of this podcast's publisher name",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PublisherHighlightedField"
@@ -3275,6 +3280,7 @@
                         "x-ballerina-name": "publisherHighlighted"
                     },
                     "listen_score": {
+                        "description": "The estimated popularity score of this podcast compared to all other rss-based public podcasts in the world, on a scale from 0 to 100",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/ListenScoreField"
@@ -3286,6 +3292,7 @@
                         "$ref": "#/components/schemas/PodcastIdField"
                     },
                     "genre_ids": {
+                        "description": "Ids of the genres this podcast belongs to",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/GenreIdsField"
@@ -3294,6 +3301,7 @@
                         "x-ballerina-name": "genreIds"
                     },
                     "listennotes_url": {
+                        "description": "The url of this podcast on ListenNotes.com",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PodcastLNUrlField"
@@ -3804,6 +3812,7 @@
                 "type": "object",
                 "properties": {
                     "update_frequency_hours": {
+                        "description": "How frequently this podcast releases a new episode, in hours",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/UpdateFrequencyHoursField"
@@ -3818,6 +3827,7 @@
                         "x-ballerina-name": "descriptionOriginal"
                     },
                     "listen_score_global_rank": {
+                        "description": "The estimated popularity ranking of this podcast compared to all other rss-based public podcasts in the world, such as 0.5%",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/ListenScoreGlobalRankField"
@@ -3826,6 +3836,7 @@
                         "x-ballerina-name": "listenScoreGlobalRank"
                     },
                     "itunes_id": {
+                        "description": "iTunes id for this podcast",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/ITunesIdField"
@@ -3834,6 +3845,7 @@
                         "x-ballerina-name": "itunesId"
                     },
                     "explicit_content": {
+                        "description": "Whether this podcast contains explicit language",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/ExplicitField"
@@ -3842,6 +3854,7 @@
                         "x-ballerina-name": "explicitContent"
                     },
                     "audio_length_sec": {
+                        "description": "Average audio length of all episodes of this podcast, in seconds",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/AvgAudioLengthSecField"
@@ -3850,6 +3863,7 @@
                         "x-ballerina-name": "audioLengthSec"
                     },
                     "title_original": {
+                        "description": "Plain text of podcast name",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PodcastTitleOriginalField"
@@ -3861,6 +3875,7 @@
                         "$ref": "#/components/schemas/RssField"
                     },
                     "publisher_original": {
+                        "description": "Plain text of this podcast's publisher name",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PublisherOriginalField"
@@ -3869,6 +3884,7 @@
                         "x-ballerina-name": "publisherOriginal"
                     },
                     "has_sponsors": {
+                        "description": "Whether this podcast has sponsors",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/HasSponsorsField"
@@ -3892,6 +3908,7 @@
                         "$ref": "#/components/schemas/WebsiteField"
                     },
                     "publisher_highlighted": {
+                        "description": "Highlighted segment of this podcast's publisher name",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PublisherHighlightedField"
@@ -3900,6 +3917,7 @@
                         "x-ballerina-name": "publisherHighlighted"
                     },
                     "earliest_pub_date_ms": {
+                        "description": "The published date of the oldest episode of this podcast, as an Epoch Unix timestamp in milliseconds",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/EarliestPubDateMsField"
@@ -3908,6 +3926,7 @@
                         "x-ballerina-name": "earliestPubDateMs"
                     },
                     "genre_ids": {
+                        "description": "Ids of the genres this podcast belongs to",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/GenreIdsField"
@@ -3916,6 +3935,7 @@
                         "x-ballerina-name": "genreIds"
                     },
                     "listennotes_url": {
+                        "description": "The url of this podcast on ListenNotes.com",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PodcastLNUrlField"
@@ -3924,6 +3944,7 @@
                         "x-ballerina-name": "listennotesUrl"
                     },
                     "total_episodes": {
+                        "description": "Total number of episodes in this podcast",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/TotalEpisodesField"
@@ -3932,6 +3953,7 @@
                         "x-ballerina-name": "totalEpisodes"
                     },
                     "title_highlighted": {
+                        "description": "Highlighted segment of podcast name",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PodcastTitleHighlightedField"
@@ -3940,6 +3962,7 @@
                         "x-ballerina-name": "titleHighlighted"
                     },
                     "has_guest_interviews": {
+                        "description": "Whether this podcast has guest interviews",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/HasGuestInterviewsField"
@@ -3954,6 +3977,7 @@
                         "x-ballerina-name": "descriptionHighlighted"
                     },
                     "latest_episode_id": {
+                        "description": "The id of the most recently published episode of this podcast",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/LatestEpisodeIdField"
@@ -3962,6 +3986,7 @@
                         "x-ballerina-name": "latestEpisodeId"
                     },
                     "listen_score": {
+                        "description": "The estimated popularity score of this podcast compared to all other rss-based public podcasts in the world, on a scale from 0 to 100",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/ListenScoreField"
@@ -3970,6 +3995,7 @@
                         "x-ballerina-name": "listenScore"
                     },
                     "latest_pub_date_ms": {
+                        "description": "The published date of the latest episode of this podcast, as an Epoch Unix timestamp in milliseconds",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/LatestPubDateMsField"
@@ -4173,6 +4199,7 @@
                         "$ref": "#/components/schemas/PlaylistIdField"
                     },
                     "last_timestamp_ms": {
+                        "description": "Pass to the `last_timestamp_ms` parameter of `GET /playlists/{id}` to paginate through the items of this playlist",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PlaylistLastTimestampMsField"
@@ -4184,6 +4211,7 @@
                         "$ref": "#/components/schemas/PlaylistDefaultTypeField"
                     },
                     "listennotes_url": {
+                        "description": "The url of this playlist on ListenNotes.com",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PlaylistListennotesUrlField"
@@ -4739,6 +4767,7 @@
                         "example": "This is a good episode."
                     },
                     "data": {
+                        "description": "The episode, podcast or custom audio that this item holds, or a placeholder when it has been deleted",
                         "oneOf": [
                             {
                                 "$ref": "#/components/schemas/PlaylistEpisodeData"
@@ -5157,6 +5186,7 @@
                         "x-ballerina-name": "descriptionHighlighted"
                     },
                     "source_domain": {
+                        "description": "The domain name of the source of this curated list",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/CuratedSourceDomainField"
@@ -5168,6 +5198,7 @@
                         "$ref": "#/components/schemas/CuratedIdField"
                     },
                     "pub_date_ms": {
+                        "description": "Published date of this curated list, as an Epoch Unix timestamp in milliseconds",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/CuratedPubDateMsField"
@@ -5176,6 +5207,7 @@
                         "x-ballerina-name": "pubDateMs"
                     },
                     "listennotes_url": {
+                        "description": "The url of this curated list on ListenNotes.com",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/CuratedLNUrlField"
@@ -5184,6 +5216,7 @@
                         "x-ballerina-name": "listennotesUrl"
                     },
                     "source_url": {
+                        "description": "Url of the source of this curated list",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/CuratedSourceUrlField"
@@ -5362,6 +5395,7 @@
                         "x-ballerina-name": "descriptionOriginal"
                     },
                     "itunes_id": {
+                        "description": "iTunes id for this podcast",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/ITunesIdField"
@@ -5370,6 +5404,7 @@
                         "x-ballerina-name": "itunesId"
                     },
                     "explicit_content": {
+                        "description": "Whether this podcast contains explicit language",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/ExplicitField"
@@ -5378,6 +5413,7 @@
                         "x-ballerina-name": "explicitContent"
                     },
                     "audio_length_sec": {
+                        "description": "Audio length of this episode, in seconds",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/AudioLengthSecField"
@@ -5389,6 +5425,7 @@
                         "$ref": "#/components/schemas/LinkField"
                     },
                     "listennotes_url": {
+                        "description": "The url of this episode on ListenNotes.com",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/EpisodeLNUrlField"
@@ -5427,6 +5464,7 @@
                         "$ref": "#/components/schemas/EpisodeIdField"
                     },
                     "pub_date_ms": {
+                        "description": "Published date for this episode, as an Epoch Unix timestamp in milliseconds",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/EpisodePubDateMsField"
@@ -5617,6 +5655,7 @@
                         "$ref": "#/components/schemas/PlaylistDefaultTypeField"
                     },
                     "listennotes_url": {
+                        "description": "The url of this playlist on ListenNotes.com",
                         "allOf": [
                             {
                                 "$ref": "#/components/schemas/PlaylistListennotesUrlField"
@@ -5662,7 +5701,12 @@
                         "type": "object",
                         "properties": {
                             "podcast": {
-                                "$ref": "#/components/schemas/PodcastMinimum"
+                                "description": "The podcast that this episode belongs to",
+                                "allOf": [
+                                    {
+                                        "$ref": "#/components/schemas/PodcastMinimum"
+                                    }
+                                ]
                             }
                         }
                     }

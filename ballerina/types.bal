@@ -115,8 +115,10 @@ public type ImageField string;
 
 # The podcast that this episode belongs to
 public type EpisodeSearchResultPodcast record {
+    # Highlighted segment of podcast name
     @jsondata:Name {value: "title_highlighted"}
     PodcastTitleHighlightedField titleHighlighted?;
+    # Plain text of podcast name
     @jsondata:Name {value: "title_original"}
     PodcastTitleOriginalField titleOriginal?;
     # Image url for this podcast's artwork. If you are using PRO/ENTERPRISE plan, then it's
@@ -125,18 +127,24 @@ public type EpisodeSearchResultPodcast record {
     ImageField image?;
     # Thumbnail image url for this podcast's artwork (300x300)
     ThumbnailField thumbnail?;
+    # The estimated popularity ranking of this podcast compared to all other rss-based public podcasts in the world, such as 0.5%
     @jsondata:Name {value: "listen_score_global_rank"}
     ListenScoreGlobalRankField listenScoreGlobalRank?;
+    # Plain text of this podcast's publisher name
     @jsondata:Name {value: "publisher_original"}
     PublisherOriginalField publisherOriginal?;
+    # Highlighted segment of this podcast's publisher name
     @jsondata:Name {value: "publisher_highlighted"}
     PublisherHighlightedField publisherHighlighted?;
+    # The estimated popularity score of this podcast compared to all other rss-based public podcasts in the world, on a scale from 0 to 100
     @jsondata:Name {value: "listen_score"}
     ListenScoreField listenScore?;
     # Podcast id, which can be used to further fetch detailed podcast metadata via `GET /podcasts/{id}`
     PodcastIdField id?;
+    # Ids of the genres this podcast belongs to
     @jsondata:Name {value: "genre_ids"}
     GenreIdsField genreIds?;
+    # The url of this podcast on ListenNotes.com
     @jsondata:Name {value: "listennotes_url"}
     PodcastLNUrlField listennotesUrl?;
 };
@@ -463,25 +471,33 @@ public type ApiKeysConfig record {|
 
 # When **type** is *podcast*
 public type PodcastSearchResult record {
+    # How frequently this podcast releases a new episode, in hours
     @jsondata:Name {value: "update_frequency_hours"}
     UpdateFrequencyHoursField updateFrequencyHours?;
     # Plain text of podcast description
     @jsondata:Name {value: "description_original"}
     string descriptionOriginal?;
+    # The estimated popularity ranking of this podcast compared to all other rss-based public podcasts in the world, such as 0.5%
     @jsondata:Name {value: "listen_score_global_rank"}
     ListenScoreGlobalRankField listenScoreGlobalRank?;
+    # iTunes id for this podcast
     @jsondata:Name {value: "itunes_id"}
     ITunesIdField itunesId?;
+    # Whether this podcast contains explicit language
     @jsondata:Name {value: "explicit_content"}
     ExplicitField explicitContent?;
+    # Average audio length of all episodes of this podcast, in seconds
     @jsondata:Name {value: "audio_length_sec"}
     AvgAudioLengthSecField audioLengthSec?;
+    # Plain text of podcast name
     @jsondata:Name {value: "title_original"}
     PodcastTitleOriginalField titleOriginal?;
     # RSS url of this podcast. This field is available only in the PRO/ENTERPRISE plan
     RssField rss?;
+    # Plain text of this podcast's publisher name
     @jsondata:Name {value: "publisher_original"}
     PublisherOriginalField publisherOriginal?;
+    # Whether this podcast has sponsors
     @jsondata:Name {value: "has_sponsors"}
     HasSponsorsField hasSponsors?;
     # Podcast id, which can be used to further fetch detailed podcast metadata via `GET /podcasts/{id}`
@@ -496,27 +512,37 @@ public type PodcastSearchResult record {
     ThumbnailField thumbnail?;
     # Website url of this podcast
     WebsiteField website?;
+    # Highlighted segment of this podcast's publisher name
     @jsondata:Name {value: "publisher_highlighted"}
     PublisherHighlightedField publisherHighlighted?;
+    # The published date of the oldest episode of this podcast, as an Epoch Unix timestamp in milliseconds
     @jsondata:Name {value: "earliest_pub_date_ms"}
     EarliestPubDateMsField earliestPubDateMs?;
+    # Ids of the genres this podcast belongs to
     @jsondata:Name {value: "genre_ids"}
     GenreIdsField genreIds?;
+    # The url of this podcast on ListenNotes.com
     @jsondata:Name {value: "listennotes_url"}
     PodcastLNUrlField listennotesUrl?;
+    # Total number of episodes in this podcast
     @jsondata:Name {value: "total_episodes"}
     TotalEpisodesField totalEpisodes?;
+    # Highlighted segment of podcast name
     @jsondata:Name {value: "title_highlighted"}
     PodcastTitleHighlightedField titleHighlighted?;
+    # Whether this podcast has guest interviews
     @jsondata:Name {value: "has_guest_interviews"}
     HasGuestInterviewsField hasGuestInterviews?;
     # Highlighted segment of podcast description
     @jsondata:Name {value: "description_highlighted"}
     string descriptionHighlighted?;
+    # The id of the most recently published episode of this podcast
     @jsondata:Name {value: "latest_episode_id"}
     LatestEpisodeIdField latestEpisodeId?;
+    # The estimated popularity score of this podcast compared to all other rss-based public podcasts in the world, on a scale from 0 to 100
     @jsondata:Name {value: "listen_score"}
     ListenScoreField listenScore?;
+    # The published date of the latest episode of this podcast, as an Epoch Unix timestamp in milliseconds
     @jsondata:Name {value: "latest_pub_date_ms"}
     LatestPubDateMsField latestPubDateMs?;
 };
@@ -599,10 +625,12 @@ public type PlaylistsResponsePlaylists record {
     PlaylistDescriptionField description?;
     # A 11-character playlist id, which can be used to further fetch detailed playlist metadata via `GET /playlists/{id}`
     PlaylistIdField id?;
+    # Pass to the `last_timestamp_ms` parameter of `GET /playlists/{id}` to paginate through the items of this playlist
     @jsondata:Name {value: "last_timestamp_ms"}
     PlaylistLastTimestampMsField lastTimestampMs?;
     # The saved default view of the playlist. Changing it preserves all episodes and podcasts
     PlaylistDefaultTypeField 'type?;
+    # The url of this playlist on ListenNotes.com
     @jsondata:Name {value: "listennotes_url"}
     PlaylistListennotesUrlField listennotesUrl?;
 };
@@ -898,6 +926,7 @@ public type PlaylistItem record {
     int addedAtMs?;
     # Notes for this item
     string notes?;
+    # The episode, podcast or custom audio that this item holds, or a placeholder when it has been deleted
     PlaylistEpisodeData|PlaylistPodcastData|PlaylistCustomAudioData|PlaylistDeletedItemData data?;
     # Playlist item id
     int id?;
@@ -1118,14 +1147,18 @@ public type CuratedListSearchResult record {
     # Highlighted segment of this curated list's description
     @jsondata:Name {value: "description_highlighted"}
     string descriptionHighlighted?;
+    # The domain name of the source of this curated list
     @jsondata:Name {value: "source_domain"}
     CuratedSourceDomainField sourceDomain?;
     # Curated list id, which can be used to further fetch detailed curated list metadata via `GET /curated_podcasts/{id}`
     CuratedIdField id?;
+    # Published date of this curated list, as an Epoch Unix timestamp in milliseconds
     @jsondata:Name {value: "pub_date_ms"}
     CuratedPubDateMsField pubDateMs?;
+    # The url of this curated list on ListenNotes.com
     @jsondata:Name {value: "listennotes_url"}
     CuratedLNUrlField listennotesUrl?;
+    # Url of the source of this curated list
     @jsondata:Name {value: "source_url"}
     CuratedSourceUrlField sourceUrl?;
 };
@@ -1243,14 +1276,18 @@ public type EpisodeSearchResult record {
     # Plain text of this episode's description
     @jsondata:Name {value: "description_original"}
     string descriptionOriginal?;
+    # iTunes id for this podcast
     @jsondata:Name {value: "itunes_id"}
     ITunesIdField itunesId?;
+    # Whether this podcast contains explicit language
     @jsondata:Name {value: "explicit_content"}
     ExplicitField explicitContent?;
+    # Audio length of this episode, in seconds
     @jsondata:Name {value: "audio_length_sec"}
     AudioLengthSecField audioLengthSec?;
     # Web link of this episode
     LinkField link?;
+    # The url of this episode on ListenNotes.com
     @jsondata:Name {value: "listennotes_url"}
     EpisodeLNUrlField listennotesUrl?;
     # Highlighted segment of this episode's title
@@ -1270,6 +1307,7 @@ public type EpisodeSearchResult record {
     AudioField audio?;
     # Episode id, which can be used to further fetch detailed episode metadata via `GET /episodes/{id}`
     EpisodeIdField id?;
+    # Published date for this episode, as an Epoch Unix timestamp in milliseconds
     @jsondata:Name {value: "pub_date_ms"}
     EpisodePubDateMsField pubDateMs?;
     # Up to 2 highlighted segments of the audio transcript of this episode
@@ -1367,6 +1405,7 @@ public type PlaylistSummary record {
     PlaylistIdField id?;
     # The saved default view of the playlist. Changing it preserves all episodes and podcasts
     PlaylistDefaultTypeField 'type?;
+    # The url of this playlist on ListenNotes.com
     @jsondata:Name {value: "listennotes_url"}
     PlaylistListennotesUrlField listennotesUrl?;
 };
@@ -1382,6 +1421,7 @@ public type SpellCheckResponse record {
 # An episode in a playlist. It always carries its podcast
 public type PlaylistEpisodeData record {
     *EpisodeSimple;
+    # The podcast that this episode belongs to
     PodcastMinimum podcast;
 };
 
